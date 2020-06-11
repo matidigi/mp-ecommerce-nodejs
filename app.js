@@ -95,7 +95,7 @@ app.post('/payment-process', function (req, res) {
     };
     mercadopago.preferences.create(preference).then((response) => {
         console.log("id del preference : ",response.body.id)
-        res.render('detail', {id:response.body.init_point, price:req.body.price, title:req.body.title, img:req.body.img});
+        res.render('detail', {id:response.body.id, price:req.body.price, title:req.body.title, img:req.body.img});
     }).catch((error) => {
         console.log(error)
         res.status(500).send(error);
