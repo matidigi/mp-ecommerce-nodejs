@@ -103,11 +103,11 @@ app.post('/payment-process', function (req, res) {
             excluded_payment_types:[{ id: 'atm' }],
             installments: 6 ,
         },
-        notification_url: req.protocol + '://' + req.get('host') + '/notifications',
+        notification_url: 'https://matudigi-mp-commerce-nodejs.herokuapp.com/notifications',
         back_urls:{
-            success:req.protocol + '://' + req.get('host') + '/success',
-            pending:req.protocol + '://' + req.get('host') + '/pending',
-            failure:req.protocol + '://' + req.get('host') + '/failure'
+            success:'https://matudigi-mp-commerce-nodejs.herokuapp.com/success',
+            pending:'https://matudigi-mp-commerce-nodejs.herokuapp.com/pending',
+            failure:'https://matudigi-mp-commerce-nodejs.herokuapp.com/failure'
         },
         auto_return:"approved"
 
