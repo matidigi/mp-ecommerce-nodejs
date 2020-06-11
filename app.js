@@ -74,6 +74,15 @@ app.post('/notifications', (req,res)=>{
       var topic =req.body.topic;
       var id= req.body.id;
       console.log("id : ",id);
+      if(topic == "payment"){
+        mercadopago.payment.find_by_id(id).then((response) => {
+            console.log("respuesta del pago ",response);
+        }).catch((error) => {
+            console.log(error)
+            res.status(500).send(error);
+        });
+    
+      }
       res.status(200).send('OK');
   
   });
