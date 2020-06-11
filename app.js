@@ -75,7 +75,14 @@ app.post('/notifications', (req,res)=>{
       var id= req.body.id;
       console.log("id : ",id);
       if(topic == "payment"){
-        mercadopago.payment.find_by_id(id).then((response) => {
+
+        var configurations = {
+            qs: {
+             "id": id
+            }
+          };
+          
+          mercadopago.payment.search(configurations).then((response) => {
             console.log("respuesta del pago ",response);
         }).catch((error) => {
             console.log(error)
