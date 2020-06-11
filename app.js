@@ -142,7 +142,7 @@ app.post('/notifications', (req,res)=>{
     console.log("id : ",id);
     res.status(200).send('OK');
 
-    res.render('notifications', { payment_method_id: payment_method_id,external_reference:external_reference, co:collection_idllection_id});
+    res.render('notifications', { payment_method_id: payment_method_id,external_reference:external_reference, collection_id:collection_id});
 })
 
 app.use(express.static('assets'));
