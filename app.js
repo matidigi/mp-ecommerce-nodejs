@@ -7,6 +7,27 @@ const mercadopago = require('mercadopago');
 var app = express();
 dotenv.config();
 
+/*
+
+Tarjeta	Número	CVV	Fecha de vencimiento
+Mastercard	5031 7557 3453 0604	123	11/25
+Visa	4170 0688 1010 8020	123	11/25
+American Express	3711 8030 3257 522	1234	11/25
+
+
+APRO: Pago aprobado.
+CONT: Pago pendiente.
+OTHE: Rechazado por error general.
+CALL: Rechazado con validación para autorizar.
+FUND: Rechazado por monto insuficiente.
+SECU: Rechazado por código de seguridad inválido.
+EXPI: Rechazado por problema con la fecha de expiración.
+FORM: Rechazado por error en formulario
+
+
+
+
+*/
 // Agrega credenciales
 mercadopago.configure({
     integrator_id: process.env.INTEGRATOR_ID,
@@ -92,7 +113,7 @@ app.post('/payment-process', function (req, res) {
 
     };
     mercadopago.preferences.create(preference).then((response) => {
-        console.log(preference);
+        console.log(response);
         console.log("id del preference : ",response.body.id)
         res.render('detail', {id:response.body.id, price:req.body.price, title:req.body.title, img:req.body.img});
     }).catch((error) => {
