@@ -7,13 +7,11 @@ const mercadopago = require('mercadopago');
 var app = express();
 dotenv.config();
 
-
-
 // Agrega credenciales
 mercadopago.configure({
+    integrator_id: process.env.INTEGRATOR_ID,
     access_token: process.env.ACCESS_TOKEN
 });
-
 
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
@@ -94,8 +92,9 @@ app.post('/payment-process', function (req, res) {
 
     };
     mercadopago.preferences.create(preference).then((response) => {
+        console.log(preference);
         console.log("id del preference : ",response.body.id)
-        res.render('detail', {id:response.body.id, price:req.body.price, title:req.body.title, img:req.body.img});
+        res.render('detail', {id:response.body.init_point, price:req.body.price, title:req.body.title, img:req.body.img});
     }).catch((error) => {
         console.log(error)
         res.status(500).send(error);
@@ -104,11 +103,25 @@ app.post('/payment-process', function (req, res) {
 });
 
 app.post('/notifications', (req,res)=>{
+
+
+  //  https://www.tusitio.com/success.php?collection_id=[PAYMENT_ID]&collection_status=approved&
+  //external_reference=[EXTERNAL_REFERENCE]&payment_type=credit_card&preference_id=[PREFERENCE_ID]&
+  //site_id=[SITE_ID]&processing_mode=aggregator&merchant_account_id=null
+
+
     console.log("respuesta notificacion ", req);
+
+    var payment_method_id =req.body.payment_type;
+    var external_reference= req.body.external_reference;
+    var collection_id=req.body.collection_id;
+
     var topic =req.body.topic;
     var id= req.body.id;
     console.log("id : ",id);
     res.status(200).send('OK');
+
+    res.render('notifications', { payment_method_id: payment_method_id,external_reference:external_reference, co:collection_idllection_id});
 })
 
 app.use(express.static('assets'));
