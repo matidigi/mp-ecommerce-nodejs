@@ -57,7 +57,7 @@ app.get('/pending', function (req, res) {
     res.render('pending');
 });
 app.get('/success', function (req, res) {
-     
+     console.log("entra al success y no pasa nada");
     res.render('success');
 });
 
