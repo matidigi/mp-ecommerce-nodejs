@@ -76,7 +76,6 @@ app.post('/notifications', (req,res)=>{
       console.log("id : ",id);
       res.status(200).send('OK');
   
-      res.render('notifications', );
   });
 
 
