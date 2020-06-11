@@ -61,6 +61,25 @@ app.get('/success', function (req, res) {
     res.render('success');
 });
 
+
+app.post('/notifications', (req,res)=>{
+
+
+    //  https://www.tusitio.com/success.php?collection_id=[PAYMENT_ID]&collection_status=approved&
+    //external_reference=[EXTERNAL_REFERENCE]&payment_type=credit_card&preference_id=[PREFERENCE_ID]&
+    //site_id=[SITE_ID]&processing_mode=aggregator&merchant_account_id=null
+  
+      console.log("respuesta notificacion ", req.body);
+
+      var topic =req.body.topic;
+      var id= req.body.id;
+      console.log("id : ",id);
+      res.status(200).send('OK');
+  
+      res.render('notifications', );
+  });
+
+
 app.post('/payment-process', function (req, res) {
 
 
@@ -123,27 +142,7 @@ app.post('/payment-process', function (req, res) {
 
 });
 
-app.post('/notifications', (req,res)=>{
 
-
-  //  https://www.tusitio.com/success.php?collection_id=[PAYMENT_ID]&collection_status=approved&
-  //external_reference=[EXTERNAL_REFERENCE]&payment_type=credit_card&preference_id=[PREFERENCE_ID]&
-  //site_id=[SITE_ID]&processing_mode=aggregator&merchant_account_id=null
-
-
-    console.log("respuesta notificacion ", req);
-
-    var payment_method_id =req.body.payment_type;
-    var external_reference= req.body.external_reference;
-    var collection_id=req.body.collection_id;
-
-    var topic =req.body.topic;
-    var id= req.body.id;
-    console.log("id : ",id);
-    res.status(200).send('OK');
-
-    res.render('notifications', { payment_method_id: payment_method_id,external_reference:external_reference, collection_id:collection_id});
-})
 
 app.use(express.static('assets'));
 
