@@ -127,7 +127,7 @@ app.post('/payment-process', function (req, res) {
             pending:'https://matudigi-mp-commerce-nodejs.herokuapp.com/pending',
             failure:'https://matudigi-mp-commerce-nodejs.herokuapp.com/failure'
         },
-        auto_return:"approved"
+        auto_return:'approved'
 
     };
     mercadopago.preferences.create(preference).then((response) => {
