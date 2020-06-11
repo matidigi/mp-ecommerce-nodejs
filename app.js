@@ -6,10 +6,15 @@ var dotenv = require('dotenv');
 const mercadopago = require('mercadopago');
 var app = express();
 dotenv.config();
+
+
+
 // Agrega credenciales
 mercadopago.configure({
     access_token: process.env.ACCESS_TOKEN
 });
+
+
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 // parse application/x-www-form-urlencoded
@@ -38,6 +43,8 @@ app.get('/success', function (req, res) {
 });
 
 app.post('/payment-process', function (req, res) {
+
+
     //se crea una url de las imagenes.
     var image_url = req.protocol + '://' + req.get('host') +req.body.img.substring(1);
 
@@ -56,12 +63,12 @@ app.post('/payment-process', function (req, res) {
         email: "test_user_63274575@testuser.com",
         phone: {
           area_code: "11",
-          number: "22223333"
+          number: 22223333
         },
          
         address: {
           street_name: "False",
-          street_number: "123",
+          street_number: 123,
           zip_code: "1111"
         }
     };
@@ -88,20 +95,13 @@ app.post('/payment-process', function (req, res) {
     };
     mercadopago.preferences.create(preference).then((response) => {
         console.log("id del preference : ",response.body.id)
-        res.render('detail', {id:response.body.id, price:req.body.price, title:req.body.title, img:req.body.img});
+        res.render('detail', {id:response.body.init_point, price:req.body.price, title:req.body.title, img:req.body.img});
     }).catch((error) => {
         console.log(error)
         res.status(500).send(error);
     });
 
 });
-
-app.get('/detail', async (req, res) => res.render('detail', {
-    img: req.query.img,
-    title: req.query.title,
-    price: req.query.price,
-    unit: req.query.unit,
-  }))
 
 app.post('/notifications', (req,res)=>{
     console.log("respuesta notificacion ", req);
